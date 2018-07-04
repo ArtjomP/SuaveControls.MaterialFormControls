@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using Android.Content;
 using Android.Graphics;
 using Android.Support.V4.View;
 using SuaveControls.MaterialForms;
@@ -13,6 +14,10 @@ namespace SuaveControls.MaterialForms.Android.Renderers
 {
     public class MaterialButtonRenderer : Xamarin.Forms.Platform.Android.AppCompat.ButtonRenderer
     {
+        public MaterialButtonRenderer(Context context) : base(context)
+        {
+        }
+
         public static void Init() { }
 
         /// <summary>

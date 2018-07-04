@@ -20,6 +20,10 @@ namespace SuaveControls.MaterialForms.Android.Renderers
 {
     public class BorderlessDatePickerRenderer : DatePickerRenderer
     {
+        public BorderlessDatePickerRenderer(Context context) : base(context)
+        {
+        }
+
         public static void Init() { }
         protected override void OnElementChanged(ElementChangedEventArgs<DatePicker> e)
         {

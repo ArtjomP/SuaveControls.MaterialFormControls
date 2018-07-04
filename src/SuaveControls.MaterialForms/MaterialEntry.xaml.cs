@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -77,9 +78,29 @@ namespace SuaveControls.MaterialForms
             var matEntry = (MaterialEntry)bindable;
             matEntry.Completed = (EventHandler)newValue;
         });
+        public static readonly BindableProperty NextEntryProperty = BindableProperty.Create(nameof(NextEntry), typeof(View), typeof(MaterialEntry), propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            var matEntry = (MaterialEntry)bindable;
+            if(null != oldValue)
+                matEntry.EntryField.Completed -= matEntry.OnCompleted;
+            if(null != newValue)
+                matEntry.EntryField.Completed += matEntry.OnCompleted;
+        });
         #endregion
 
         #region Public Properties
+
+        public View NextEntry
+        {
+            get
+            {
+                return (View)GetValue(NextEntryProperty);
+            }
+            set
+            {
+                SetValue(NextEntryProperty, value);
+            }
+        }
 
         public bool IsValid
         {
@@ -239,6 +260,10 @@ namespace SuaveControls.MaterialForms
             {
                 TextChanged?.Invoke(s, a);
             };
+            Focused += (s, a) =>
+            {
+                EntryField.Focus();
+            };
 
             EntryField.Focused += async (s, a) =>
             {
@@ -261,7 +286,24 @@ namespace SuaveControls.MaterialForms
 
             UpdateValidation();
         }
+        
+        private void OnCompleted(object sender, EventArgs e)
+        {
+            OnNext();
+        }
 
+        /// <summary>
+        /// Changes focus to the NextEntry if it's not null
+        /// </summary>
+        private void OnNext()
+        {
+            if (NextEntry == null)
+                return;
+            if (NextEntry is MaterialEntry materialEntry)
+                materialEntry.EntryField.Focus();
+            else
+                NextEntry.Focus();
+        }
         /// <summary>
         /// Calculates the layout when unfocused. Includes running the animation to update the bottom border color and the floating label
         /// </summary>

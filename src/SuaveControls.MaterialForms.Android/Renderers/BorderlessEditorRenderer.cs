@@ -19,6 +19,10 @@ namespace SuaveControls.MaterialForms.Android.Renderers
 {
     public class BorderlessEditorRenderer : EditorRenderer
     {
+        public BorderlessEditorRenderer(Context context) : base(context)
+        {
+        }
+
         public static void Init() { }
         protected override void OnElementChanged(ElementChangedEventArgs<Editor> e)
         {

@@ -20,6 +20,10 @@ namespace SuaveControls.MaterialForms.Android.Renderers
 {
     public class BorderlessTimePickerRenderer : TimePickerRenderer
     {
+        public BorderlessTimePickerRenderer(Context context) : base(context)
+        {
+        }
+
         public static void Init() { }
         protected override void OnElementChanged(ElementChangedEventArgs<TimePicker> e)
         {
